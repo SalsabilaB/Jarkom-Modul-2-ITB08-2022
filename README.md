@@ -733,10 +733,8 @@ Restart service apache2 dengan `service apache2 restart`
 
 ### Testing
 ---
-- pada SSS
-![testing16](image/soal6/testing16.png)
 - lynx 192.218.3.3
-![testing16b](image/soal6/testing16b.png)
+![testing16](image/soal6/testing16.png)
 
 ## Soal 17
 ---
