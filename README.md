@@ -76,6 +76,57 @@ iface eth0 inet static
 	netmask 255.255.255.0
 	gateway 192.218.3.1
 ```
+Semua node terhubung pada router Ostania, sehingga dapat mengakses internet. pada node OSTANIA harus masukan command
+  ``` 
+ iptables -t nat -A POSTROUTING -j MASQUERADE -o eth0 -s 192.218.0.0/16
+ ``` 
+ terlebih dahulu
+
+ setelah itu harus mengarah ke 192.168.211.1 
+ dengan menggunakan command 
+ ```
+ echo "nameserver 192.168.122.1" > /etc/resolv.conf
+ ```
+## Soal 2
+---
+Untuk mempermudah mendapatkan informasi mengenai misi dari Handler, bantulah Loid membuat website utama dengan akses wise.yyy.com dengan alias www.wise.yyy.com pada folder wise
+install bind9
+```
+apt-get install bind9 -y
+```
+awalnya konfigurasi pada file
+di /etc/bind/named.conf.local
+
+```
+zone "wise.ITB08.com" {
+        type master;
+        file "/etc/bind/wise/wise.ITB10.com";
+};
+```
+lalu buat folder wise pada /etc/bind/  \
+lalu buat file wise.ITB10.com dan masukan konfigurasi
+ ```
+	
+$TTL    604800
+@       IN      SOA     wise.ITB08.com. root.wise.ITB08.com. (
+                        2022102602         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@             IN      NS      wise.ITB08.com.
+@             IN      A       $WISE_IP ; IP WISE
+@             IN      AAAA    ::1
+www           IN      CNAME   wise.ITB08.com.
+ ```
+ setelah itu reset bind9 dengan command
+ ```
+ service bind9 restart
+ ```
+
+ selanjutnya tambahkan IP wise sebagai nameserver pada node SSS dan GARDEN  pada /etc/resolv.conf
+
 
 ## Soal 4
 ---
