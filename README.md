@@ -135,7 +135,8 @@ www.eden      IN      CNAME   eden.wise.itb08.com.
 ```
 
  selanjutnya tambahkan IP wise sebagai nameserver pada node SSS dan GARDEN  pada /etc/resolv.conf
- ##Testing
+ ## **testing**
+ 
  ![wise 3](https://user-images.githubusercontent.com/90242686/198839987-6a8b1115-7d2f-495c-af9d-169cbd2dd528.jpg)
 
 
