@@ -668,10 +668,9 @@ Selanjutnya restart service apache2 dengan `service apache2 restart`
 
 ### Testing
 - lynx strix.operation.wise.itb08.com:15000
-![testing14a](image/soal14/testing14a.png)
 
 - lynx strix.operation.wise.itb08.com:15500
-![testing14b](image/soal14/testing14b.png)
+![testing14](image/soal14/testing14.png)
 
 ## Soal 15
 ---
