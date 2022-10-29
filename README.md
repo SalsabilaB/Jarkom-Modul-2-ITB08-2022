@@ -104,7 +104,7 @@ zone "wise.ITB08.com" {
 };
 ```
 lalu buat folder wise pada /etc/bind/  \
-lalu buat file wise.ITB10.com dan masukan konfigurasi
+lalu buat file wise.ITB08.com dan masukan konfigurasi
  ```
 	
 $TTL    604800
