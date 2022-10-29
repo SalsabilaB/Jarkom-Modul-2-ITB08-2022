@@ -38,7 +38,7 @@ iface eth3 inet static
 SSS
 auto eth0
 iface eth0 inet static
-	address 192.218.1.2
+	address 192.218.1.2buat
 	netmask 255.255.255.0
 	gateway 192.218.1.1 
 ```
@@ -394,7 +394,7 @@ konfigurasikan seperti berikut
 ```
 untuk document rootnya sudah diarahkan ke /var/www/wise.yyy.com dan ditambahkan alias agar url www.wise.yyy.com/index.php/home dapat menjadi menjadi www.wise.yyy.com/home \
 
-buat folder wise.ITB10.com pada /var/www/
+buat folder wise.itb08.com pada /var/www/
 download terlebih dahulu isi dari wise.itb08.com setelah itu unzip ke folder tersebut
 ```
 wget "https://drive.google.com/uc?id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV&export=download" -O eden.wise.zip
