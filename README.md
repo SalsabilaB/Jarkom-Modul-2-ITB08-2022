@@ -43,6 +43,7 @@ iface eth0 inet static
 	gateway 192.218.1.1 
 ```
 ##### Konfigurasi Garden
+```
 auto eth0
 iface eth0 inet static
 	address 192.218.1.3
@@ -50,6 +51,7 @@ iface eth0 inet static
 	gateway 192.218.1.1
 ```
 ##### Konfigurasi Garden
+```
 auto eth0
 iface eth0 inet static
 	address 192.218.2.2
@@ -57,6 +59,7 @@ iface eth0 inet static
 	gateway 192.218.2.1
 ```
 ##### Konfigurasi Berlint
+```
 auto eth0
 iface eth0 inet static
 	address 192.218.3.2
@@ -66,11 +69,13 @@ iface eth0 inet static
 
 
 ##### Konfigurasi Eden
+```
 auto eth0
 iface eth0 inet static
 	address 192.218.3.3
 	netmask 255.255.255.0
 	gateway 192.218.3.1
+```
 
 ## Soal 4
 ---
@@ -119,8 +124,8 @@ Setelah itu, restart service bind9 dengan `service bind9 restart`
 Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint sebagai DNS Slave untuk domain utama.
 
 ### Solution
-**Server WISE**
 ---
+**Server WISE**
 Pertama, konfigurasi pada file `/etc/bind/named.conf.local` untuk melakukan konfigurasi DNS Slave yang mengarah ke Berlint
 
 ```
@@ -257,3 +262,6 @@ Lalu restart service bind9 dengan `service bind9 restart`
 ### Testing
 - ping operation.wise.itb08.com dan www.operation.wise.itb08.com
 ![testing6](image/soal6/testing6.png)
+
+
+
