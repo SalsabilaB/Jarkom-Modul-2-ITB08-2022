@@ -440,6 +440,356 @@ selanjutnya pada node eden juga harus diinstall lynx \
 jika berhasil maka akan menampilkan seperti berikut
 ![testing9](image/soal9/testing9.png)
 
-##
+## Soal 10
+---
+Setelah itu, pada subdomain www.eden.wise.yyy.com, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com.
+
+### Solution
+---
+**Server Eden**
+Konfigurasi file `/etc/apache2/sites-available/eden.wise.itb03.com.conf`
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.itb08.com
+        ServerName eden.wise.itb08.com
+        ServerAlias www.eden.wise.itb08.com
+        
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/eden.wise.itb08.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+```
+
+Aktifkan virtualhost dengan a2ensite serta membuat sebuah direktori untuk documentroot dari subdomain `eden.wise.iyb08.com` kemudian memindahkan folder `eden.wise` dalam root pada `/var/www/eden.wise.itb03.com/`
+
+```
+a2ensite eden.wise.itb08.com
+mkdir -p  `/var/www/eden.wise.itb08.com/`
+mv eden.wise/ /var/www/eden.wise.itb08.com/
+service apache2 restart
+```
+
+### Testing
+---
+- lynx eden.wise.itb08.com
+![testing10](image/soal0/testing10.png)
+
+## Soal 11
+---
+Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja
+
+### Solution
+---
+**Server Eden**
+Konfigurasi file `/etc/apache2/sites-available/eden.wise.itb08.com.conf` tambahkan `Options +Indexes` ke direktori yang ingin di listing
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.itb08.com
+        ServerName eden.wise.itb08.com
+        ServerAlias www.eden.wise.itb08.com
+
+        <Directory /var/www/eden.wise.itb08.com/public>
+                Options +Indexes
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/eden.wise.itb08.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+```
+
+Restart service apache2 `service apache2 restart`
+
+### Testing
+---
+- lynx www.eden.wise.itb08.com/public
+![testing11](image/soal1/testing11.png)
+
+## Soal 12
+---
+Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
+
+### Solution
+---
+**Server Eden**
+Konfigurasi `/etc/apache2/sites-available/eden.wise.itb08.com.conf` lalu tambahan konfigurasi ErrorDocument untuk setiap error yg ada yg diarahka ke file `/error/404.html` dengan
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.itb08.com
+        ServerName eden.wise.itb08.com
+        ServerAlias www.eden.wise.itb08.com
+
+        ErrorDocument 404 /error/404.html
+        ErrorDocument 500 /error/404.html
+        ErrorDocument 502 /error/404.html
+        ErrorDocument 503 /error/404.html
+        ErrorDocument 504 /error/404.html
+
+        <Directory /var/www/eden.wise.itb08.com/public>
+                Options +Indexes
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/eden.wise.itb08.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+```
+
+restart apache2 dengan `service apache2 restart`
+
+### Testing
+- lynx www.eden.wise.itb08.com/yeay
+![testing12](image/soal12/testing12.png)
+
+## Soal 13
+---
+Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.eden.wise.yyy.com/public/js menjadi www.eden.wise.yyy.com/js
+
+### Solution
+---
+**Server Eden**
+Edit konfigurasi pada `/etc/apache2/sites-available/eden.wise.itb08.com.conf`
+
+```
+<VirtualHost *:80>  
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.itb08.com
+        ServerName eden.wise.itb08.com
+        ServerAlias www.eden.wise.itb08.com
+
+        <Directory /var/www/eden.wise.itb08.com/public>
+                Options +Indexes
+        </Directory>
+
+        Alias \"/js\" \"/var/www/eden.wise.itb08.com/public/js\"
+
+        ErrorDocument 404 /error/404.html
+
+        <Files \"/var/www/eden.wise.itb08.com/error/404.html\">
+                <If \"-z %{ENV:REDIRECT_STATUS}\">
+                        RedirectMatch 404 ^/error/404.html$
+                </If>
+        </Files>
+
+         <Directory /var/www/eden.wise.itb08.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Selanjutnya restart service apache2 dengan `service apache2 restart`
+
+### Testing
+- lynx www.eden.wise.itb08.com/js
+![testing13](image/soal13/testing13.png)
+
+## Soal 14
+---
+Loid meminta agar www.strix.operation.wise.yyy.com hanya bisa diakses dengan port 15000 dan port 15500.
+
+### Solution
+---
+**Server Eden**
+Konfigurasi file `/etc/apache2/sites-available/strix.operation.wise.itb08.com.conf` akan ditambahkan VirtualHost baru yang berada pada port 15000 dan 15500.
+
+```
+<VirtualHost *:15000 *:15500>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.itb08.com
+        ServerName strix.operation.wise.itb08.com
+        ServerAlias www.strix.operation.wise.itb08.com
+
+        <Directory \"/var/www/strix.operation.wise.itb08.com\">
+                AuthType Basic
+                AuthName \"Restricted Content\"
+                AuthUserFile /var/www/strix.operation.wise.itb08
+                Require valid-user
+        </Directory>
+      
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Kemudian lakukan 
+
+```
+a2ensite strix.operation.wise.itb08.com
+service apache2 restart
+mkdir /var/www/strix.operation.wise.itb08.com
+mv strix.operation.wise/* /var/www/strix.operation.wise.itb08.com
+```
+
+Konfigurasi file `/etc/apache2/ports.conf` tambahkan Listen 15000 dan 15500 dengan
+
+```
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+Listen 15000 
+Listen 15500
+```
+
+Selanjutnya restart service apache2 dengan `service apache2 restart`
+
+### Testing
+- lynx strix.operation.wise.itb08.com:15000
+![testing14a](image/soal14/testing14a.png)
+
+- lynx strix.operation.wise.itb08.com:15500
+![testing14b](image/soal14/testing14b.png)
+
+## Soal 15
+---
+dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
+
+### Solution
+---
+**Server Eden**
+Jalankan Command `htpasswd -c -b /etc/apache2/.htpasswd Twilight opStrix`
+konfigurasi file `/etc/apache2/sites-available/strix.operation.wise.itb08.com.conf` dengan
+
+```
+<VirtualHost *:15000 *:15500>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.itb08.com
+        ServerName strix.operation.wise.itb08.com
+        ServerAlias www.strix.operation.wise.itb08.com
+
+        <Directory \"/var/www/strix.operation.wise.itb08.com\">
+                AuthType Basic
+                AuthName \"Restricted Content\"
+                AuthUserFile /etc/apache2/.htpasswd
+                Require valid-user
+        </Directory>
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Restart service apache2 dengan `service apache2 restart`
+
+### Testing
+---
+- lynx strix.operation.wise.itb08.com:15000
+![testing15](image/soal5/testing15.png)
+
+## Soal 16
+---
+dan setiap kali mengakses IP Eden akan dialihkan secara otomatis ke www.wise.yyy.com
+
+### Solution
+---
+**Server Eden**
+Konfigurasi file `/etc/apache2/sites-available/000-default.conf`
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+        RewriteEngine On
+        RewriteCond %{HTTP_HOST} !^wise.itb08.com$
+        RewriteRule /.* http://wise.itb08.com/ [R]
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Restart service apache2 dengan `service apache2 restart`
+
+### Testing
+---
+- pada SSS
+![testing16](image/soal6/testing16.png)
+- lynx 192.218.3.3
+![testing16b](image/soal6/testing16b.png)
+
+## Soal 17
+---
+Karena website www.eden.wise.yyy.com semakin banyak pengunjung dan banyak modifikasi sehingga banyak gambar-gambar yang random, maka Loid ingin mengubah request gambar yang memiliki substring “eden” akan diarahkan menuju eden.png. Bantulah Agent Twilight dan Organisasi WISE menjaga perdamaian!
+
+### Solution
+---
+**Server Eden**
+Konfigurasi file `/var/www/eden.wise.itb08.com/.htaccess`
+
+```
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/public/images/(.*)eden(.*)
+RewriteCond %{REQUEST_URI} !/public/images/eden.png
+RewriteRule /.* http://eden.wise.itb08.com/public/images/eden.png [L]
+```
+
+Lalu konfigurasi file `/etc/apache2/sites-available/eden.wise.itb08.com.conf`
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.itb08.com
+        ServerName eden.wise.itb08.com
+        ServerAlias www.eden.wise.itb08.com
+
+        ErrorDocument 404 /error/404.html
+        ErrorDocument 500 /error/404.html
+        ErrorDocument 502 /error/404.html
+        ErrorDocument 503 /error/404.html
+        ErrorDocument 504 /error/404.html
+
+        <Directory /var/www/eden.wise.itb08.com/public>
+                Options +Indexes
+        </Directory>
+
+        Alias "/js" "/var/www/eden.wise.itb08.com/public/js"
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /var/www/eden.wise.itb08.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+```
+
+Setelah itu, restart `service apache2 restart`
+
+### Testing
+- lynx eden.wise.itb08.com/edening.png
+![testing17](image/soal7/testing17.png)
 
 
