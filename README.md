@@ -34,6 +34,7 @@ iface eth3 inet static
   ```
 ##### Konfigurasi SSS
 ```
+
 SSS
 auto eth0
 iface eth0 inet static
@@ -43,6 +44,7 @@ iface eth0 inet static
   ```
 
 ##### Konfigurasi Garden
+
 auto eth0
 iface eth0 inet static
 	address 192.218.1.3
@@ -51,6 +53,7 @@ iface eth0 inet static
   ```
 
 ##### Konfigurasi Garden
+
 auto eth0
 iface eth0 inet static
 	address 192.218.2.2
@@ -59,6 +62,7 @@ iface eth0 inet static
   ```
 
 ##### Konfigurasi Berlint
+
 auto eth0
 iface eth0 inet static
 	address 192.218.3.2
