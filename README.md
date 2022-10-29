@@ -734,7 +734,7 @@ Restart service apache2 dengan `service apache2 restart`
 ### Testing
 ---
 - lynx 192.218.3.3
-![testing16](image/soal6/testing16.png)
+![testing16](image/soal16/testing16.png)
 
 ## Soal 17
 ---
