@@ -440,4 +440,6 @@ selanjutnya pada node eden juga harus diinstall lynx \
 jika berhasil maka akan menampilkan seperti berikut
 ![testing9](image/soal9/testing9.png)
 
+##
+
 
