@@ -98,24 +98,24 @@ awalnya konfigurasi pada file
 di /etc/bind/named.conf.local
 
 ```
-zone "wise.ITB08.com" {
+zone "wise.itb08.com" {
         type master;
         file "/etc/bind/wise/wise.ITB10.com";
 };
 ```
 lalu buat folder wise pada /etc/bind/  \
-lalu buat file wise.ITB08.com dan masukan konfigurasi
+lalu buat file wise.itb08.com dan masukan konfigurasi
  ```
 	
 $TTL    604800
-@       IN      SOA     wise.ITB08.com. root.wise.ITB08.com. (
+@       IN      SOA     wise.itb08.com. root.wise.ITB08.com. (
                         2022102602         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-@             IN      NS      wise.ITB08.com.
+@             IN      NS      wise.itb08.com.
 @             IN      A       $WISE_IP ; IP WISE
 @             IN      AAAA    ::1
 www           IN      CNAME   wise.ITB08.com.
