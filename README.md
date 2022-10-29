@@ -38,7 +38,7 @@ iface eth3 inet static
 SSS
 auto eth0
 iface eth0 inet static
-	address 192.218.1.2buat
+	address 192.218.1.2
 	netmask 255.255.255.0
 	gateway 192.218.1.1 
 ```
@@ -108,7 +108,7 @@ lalu buat file wise.itb08.com dan masukan konfigurasi
  ```
 	
 $TTL    604800
-@       IN      SOA     wise.itb08.com. root.wise.ITB08.com. (
+@       IN      SOA     wise.itb08.com. root.wise.itb08.com. (
                         2022102602         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
@@ -124,6 +124,15 @@ www           IN      CNAME   wise.ITB08.com.
  ```
  service bind9 restart
  ```
+ 
+ ### Soal 3
+ ---
+ Setelah itu ia juga ingin membuat subdomain eden.wise.yyy.com dengan alias www.eden.wise.yyy.com yang diatur DNS-nya di WISE dan mengarah ke Eden 
+ 
+ ```
+eden          IN      A       192.218.3.3 ; IP Eden
+www.eden      IN      CNAME   eden.wise.itb08.com.
+```
 
  selanjutnya tambahkan IP wise sebagai nameserver pada node SSS dan GARDEN  pada /etc/resolv.conf
 
