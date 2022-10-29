@@ -100,7 +100,7 @@ di /etc/bind/named.conf.local
 ```
 zone "wise.itb08.com" {
         type master;
-        file "/etc/bind/wise/wise.ITB10.com";
+        file "/etc/bind/wise/wise.itb08.com";
 };
 ```
 lalu buat folder wise pada /etc/bind/  \
