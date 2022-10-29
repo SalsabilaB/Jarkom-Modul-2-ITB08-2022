@@ -31,7 +31,7 @@ auto eth3
 iface eth3 inet static
 	address 192.218.3.1
 	netmask 255.255.255.0
-  ```
+```
 ##### Konfigurasi SSS
 ```
 
@@ -40,35 +40,29 @@ auto eth0
 iface eth0 inet static
 	address 192.218.1.2
 	netmask 255.255.255.0
-	gateway 192.218.1.1
-  ```
-
+	gateway 192.218.1.1 
+```
 ##### Konfigurasi Garden
-
 auto eth0
 iface eth0 inet static
 	address 192.218.1.3
 	netmask 255.255.255.0
 	gateway 192.218.1.1
-  ```
-
+```
 ##### Konfigurasi Garden
-
 auto eth0
 iface eth0 inet static
 	address 192.218.2.2
 	netmask 255.255.255.0
 	gateway 192.218.2.1
-  ```
-
+```
 ##### Konfigurasi Berlint
-
 auto eth0
 iface eth0 inet static
 	address 192.218.3.2
 	netmask 255.255.255.0
 	gateway 192.218.3.1
-  ```
+```
 
 
 ##### Konfigurasi Eden
