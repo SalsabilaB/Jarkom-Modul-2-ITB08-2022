@@ -314,5 +314,117 @@ Lalu restart service bind9 dengan `service bind9 restart`
 - ping operation.wise.itb08.com dan www.operation.wise.itb08.com
 ![testing6](image/soal6/testing6.png)
 
+## Soal 7
+Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses strix.operation.wise.yyy.com dengan alias www.strix.operation.wise.yyy.com yang mengarah ke Eden .
+untuk nomer 7 akan dikonfigurasikan bind9 pada Berlint\
+pada named.conf.local , tambahkan zone untuk operation.wise.itb08.com
+```
+zone "operation.wise.itb08.com" {
+	type master;
+	file "/etc/bind/operation/operation.wise.itb08.com";
+};
+```
+tambahkan folder operation pada /etc/bind/ dan buat file operation.wise.itb08.com. pada folder tersebut\
+pada file tersebut konfigurasikan seperti berikut
+```
+$TTL    604800
+@       IN      SOA     operation.wise.itb08.com. root.operation.wise.itb08.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@          IN      NS      operation.wise.itb08.com.
+@          IN      A       192.218.2.3 ; IP Eden
+www        IN      CNAME   operation.wise.itb08.com.
+strix      IN      A       192.218.2.3 ; IP Eden
+www.strix  IN      CNAME   strix.operation.wise.itb08.com.
+```
+setelah itu di restart bind nya 
+
+## **testing**
+![testing7](image/soal7/testing7a.png)
+![testing7](image/soal7/testing7b.png)
+
+
+
+## **8 & 9**
+(8)setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.wise.yyy.com. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com\
+\
+(9)Setelah itu, Loid juga membutuhkan agar url www.wise.yyy.com/index.php/home dapat menjadi menjadi www.wise.yyy.com/home 
+
+install terlebih dahulu apache2 dan apt-get install libapache2-mod-php7.0 -y pada node eden\
+dilanjutkan dengan tambahkan file wise.itb08.com.conf pada /etc/apache2/sites-available \
+konfigurasikan seperti berikut
+```
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/wise.itb08.com
+        ServerName wise.itb08.com
+        ServerAlias www.wise.itb08.com
+        
+        <Directory /var/www/wise.itb08.com/>
+                Options +Indexes
+        </Directory>
+ 
+        Alias \"/home\" \"/var/www/wise.itb08.com/index.php/home\"
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+```
+untuk document rootnya sudah diarahkan ke /var/www/wise.yyy.com dan ditambahkan alias agar url www.wise.yyy.com/index.php/home dapat menjadi menjadi www.wise.yyy.com/home \
+
+buat folder wise.ITB10.com pada /var/www/
+download terlebih dahulu isi dari wise.itb08.com setelah itu unzip ke folder tersebut
+```
+wget "https://drive.google.com/uc?id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV&export=download" -O eden.wise.zip
+```
+
+```
+unzip eden.wise.zip
+```
+
+```
+mv eden.wise/* /var/www/eden.wise.itb08.com
+```
+## **testing**
+sebelumnya kita perlu mengganti IP wise.itb08.com pada node wise dan juga pada reverse domainnya
+![testing8](image/soal8/testing8a.png)
+
+![testing8](image/soal8/testing8b.png)
+
+enable wise.itb08.com dengang command\
+```
+a2ensite wise.itb08.com
+```
+setelah itu reload dengan command
+```
+service apache2 reload
+```
+lalu restart apachenya
+
+selanjutnya pada node eden juga harus diinstall lynx \
+jika berhasil maka akan menampilkan seperti berikut
+![testing9](image/soal9/testing9.png)
 
 
