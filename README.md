@@ -478,7 +478,7 @@ service apache2 restart
 ### Testing
 ---
 - lynx eden.wise.itb08.com
-![testing10](image/soal0/testing10.png)
+![testing10](image/soal10/testing10.png)
 
 ## Soal 11
 ---
@@ -515,7 +515,7 @@ Restart service apache2 `service apache2 restart`
 ### Testing
 ---
 - lynx www.eden.wise.itb08.com/public
-![testing11](image/soal1/testing11.png)
+![testing11](image/soal11/testing11.png)
 
 ## Soal 12
 ---
